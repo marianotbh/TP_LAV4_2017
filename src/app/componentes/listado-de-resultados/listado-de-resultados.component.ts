@@ -10,6 +10,9 @@ export class ListadoDeResultadosComponent implements OnInit {
  @Input()
  listado: Array<any>;
 
+ @Input()
+ saludo: string;
+
 
   constructor() {
    }
