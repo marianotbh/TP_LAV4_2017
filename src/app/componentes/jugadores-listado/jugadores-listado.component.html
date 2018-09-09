@@ -4,9 +4,6 @@
   <li><a (click)="TraerGanadores()">Los ganadores</a></li>
   <li><a (click)="TraerPerdedores()">Los perdedores</a></li>
 </ul>
-
-
-
 <table class="table table-condensed">
   <thead>
     <tr>
@@ -17,13 +14,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let jugador of listado" >
+    <tr *ngFor="let jugador of listado">
       <td>{{jugador.usuario}} </td>
-      <td>{{jugador.cuit}} </td> 
-      <td>{{jugador.sexo | sexo| uppercase}} </td> 
-      <td>{{jugador.gano}} </td> 
-      
+      <td>{{jugador.cuit}} </td>
+      <td>{{jugador.sexo | sexo| uppercase}} </td>
+      <td>{{jugador.gano}} </td>
+
     </tr>
-   
   </tbody>
 </table>

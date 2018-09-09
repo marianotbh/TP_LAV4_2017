@@ -1,1 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import '../node_modules/typeface-baloo-tammudu/index.css';
+body {
+    background-image: url('/src/assets/imagenes/background.jpg');
+    background-repeat: repeat;
+}
+
+main {
+    height: 100%;
+    padding-bottom: 300px;
+    position: relative;
+    min-height: 100vh;
+    /* will cover the 100% of viewport */
+    display: block;
+}
+
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
+a, a:hover {
+    text-decoration: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Baloo Tammudu', cursive !important;
+}
+
+@keyframes bounce {
+    0%, 100%, 20%, 50%, 80% {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0)
+    }
+    40% {
+        -webkit-transform: translateY(-10px);
+        -ms-transform: translateY(-10px);
+        transform: translateY(-10px)
+    }
+    60% {
+        -webkit-transform: translateY(-5px);
+        -ms-transform: translateY(-5px);
+        transform: translateY(-5px)
+    }
+}
+
+.btn {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+}
+
+.btn:hover {
+    cursor: pointer;
+    animation-name: bounce;
+    -moz-animation-name: bounce;
+}

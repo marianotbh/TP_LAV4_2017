@@ -38,6 +38,7 @@ const MiRuteo = [{path: 'error' , component: ErrorComponent},
 
 {path: '**' , component: ErrorComponent} ];
 */
+
 import { JugadoresListadoComponent } from './componentes/jugadores-listado/jugadores-listado.component';
 
 import { JuegoServiceService } from './servicios/juego-service.service';
@@ -53,6 +54,9 @@ import { MapaDeGoogleComponent } from './componentes/mapa-de-google/mapa-de-goog
 import { AgmCoreModule } from '@agm/core';
 import { InputJugadoresComponent } from './componentes/input-jugadores/input-jugadores.component';
 import { SexoPipe } from './pipes/sexo.pipe';
+import { PiedepaginaComponent } from './componentes/piedepagina/piedepagina.component';
+import { NavbarComponent } from './componentes/navbar/navbar.component';
+import { MenuinicioComponent } from './componentes/menuinicio/menuinicio.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +82,10 @@ import { SexoPipe } from './pipes/sexo.pipe';
     MapaDeGoogleComponent,
     JugadoresListadoComponent,
     InputJugadoresComponent,
-    SexoPipe
+    SexoPipe,
+    PiedepaginaComponent,
+    NavbarComponent,
+    MenuinicioComponent
   ],
   imports: [
     BrowserModule,

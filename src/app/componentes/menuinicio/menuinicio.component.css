@@ -1,0 +1,17 @@
+.media {
+
+}
+
+.media-left {
+    width:100px;
+    height:100px;
+    margin-right:15px;
+    display:block;
+}
+.media-left img {
+    width:100%;
+}
+
+.media-body {
+
+}
