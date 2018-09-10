@@ -1,14 +1,21 @@
 #pie-de-pagina {
-    width:100%;
-    margin-top:50px;
-    padding:20px 0 0;
+    width: 100%;
+    margin-top: 50px;
+    padding: 20px 0 0;
     position: absolute;
-    bottom:0;
+    bottom: 0;
+    color:yellow;
+    background-color: #3E06B0;
 }
+
+#pie-de-pagina * {
+    color:yellow;
+}
+
 #pie-de-pagina .wrap {
-    max-width:70%;
+    max-width: 70%;
 }
 
 .footer-copyright {
-    background-color:rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
 }

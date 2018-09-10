@@ -57,6 +57,7 @@ import { SexoPipe } from './pipes/sexo.pipe';
 import { PiedepaginaComponent } from './componentes/piedepagina/piedepagina.component';
 import { NavbarComponent } from './componentes/navbar/navbar.component';
 import { MenuinicioComponent } from './componentes/menuinicio/menuinicio.component';
+import { RegistroFormularioComponent } from './componentes/registro-formulario/registro-formulario.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { MenuinicioComponent } from './componentes/menuinicio/menuinicio.compone
     SexoPipe,
     PiedepaginaComponent,
     NavbarComponent,
-    MenuinicioComponent
+    MenuinicioComponent,
+    RegistroFormularioComponent
   ],
   imports: [
     BrowserModule,

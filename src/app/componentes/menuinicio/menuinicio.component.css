@@ -1,17 +1,41 @@
-.media {
-
+.card-h {
+    width: 100%;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    display: block;
 }
 
-.media-left {
-    width:100px;
-    height:100px;
-    margin-right:15px;
-    display:block;
+.card-h+.card-h {
+    margin-top: 15px;
 }
-.media-left img {
+
+.card-h-media {
+    width: 100px;
+    padding:15px 0;
+    margin-left:25px;
+    display:inline-block;
+    vertical-align: middle;
+}
+
+.card-h-media>* {
     width:100%;
+    display:inline-block;
+    vertical-align: middle;
+    margin:auto;
 }
 
-.media-body {
+.card-h-media i {
+    font-size:100px;
+}
 
+.card-h-body {
+    padding: 15px 25px;
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 150px);
+}
+
+.card-h-title {
+    display: block;
 }

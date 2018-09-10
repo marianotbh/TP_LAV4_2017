@@ -2,8 +2,9 @@
 
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 @import '../node_modules/typeface-baloo-tammudu/index.css';
+@import '../node_modules/typeface-press-start-2p/index.css';
 body {
-    background-image: url('/src/assets/imagenes/background.jpg');
+    background-image: url('/src/assets/imagenes/background.gif');
     background-repeat: repeat;
 }
 
@@ -24,8 +25,14 @@ a, a:hover {
     text-decoration: none !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Baloo Tammudu', cursive !important;
+@font-face {
+    font-family: 'Zorque';
+    src: url('./assets/typeface/zorque.ttf') format('truetype');
+    font-weight: bold;
+}
+
+.sdj, .sdj-outline, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Zorque', cursive !important;
 }
 
 @keyframes bounce {
@@ -46,7 +53,32 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-.btn {
+.btn.sdj {
+    color: yellow;
+    background-color: #3E06B0;
+}
+
+.btn.sdj-outline {
+    color: yellow;
+    border: 1px solid yellow !important;
+    background: none;
+}
+
+.btn.sdj-outline:hover {
+    color: #3E06B0 !important;
+    background-color: yellow;
+}
+
+input.sdj {
+    border: 1px solid yellow !important;
+    background-color: #3E06B0 !important;
+}
+
+input.sdj, input.sdj::placeholder {
+    color: yellow !important;
+}
+
+.btn.sdj, .btn.sdj-outline, .bouncy {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
@@ -55,7 +87,7 @@ h1, h2, h3, h4, h5, h6 {
     animation-timing-function: ease-in-out;
 }
 
-.btn:hover {
+.btn.sdj:hover, .btn.sdj-outline:hover, .bouncy:hover {
     cursor: pointer;
     animation-name: bounce;
     -moz-animation-name: bounce;
