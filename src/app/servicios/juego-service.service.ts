@@ -8,12 +8,12 @@ export class JuegoServiceService {
 
   peticion:any;
   constructor( public miHttp: MiHttpService ) {
-    this.peticion = this.miHttp.httpGetO("http://localhost:3003");
-//    this.peticion = this.miHttp.httpGetO("https://restcountries.eu/rest/v2/all");
+    //this.peticion = this.miHttp.httpGetO("http://localhost:3003");
+    this.peticion = this.miHttp.httpGetO("https://restcountries.eu/rest/v2/all");
   }
 
   public listar(): Array<Juego> {
-   this.miHttp.httpGetP("https://restcountries.eu/rest/v2/all")
+   this.miHttp.httpGetP(this.peticion)
     .then( data => {
       console.log( data );
     })

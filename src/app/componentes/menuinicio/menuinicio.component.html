@@ -19,9 +19,15 @@
   <div class="card-h-body">
     <h5 class="card-h-title">Listados de resultados</h5>
     <p class="card-h-text">Los listados de los resultados con ordenamiento y busqueda</p>
-    <a routerLink="/Listado" class="btn sdj"><b>Ver listado</b></a>
+    <button (click)="Listar()" class="btn sdj"><b>Ver listado</b></button>
+    <div ng-if="mostrar" class="container">
+      <li *ngFor="let pais of paises">Pais: {{pais.name}} - Población: {{pais.population}} - Región: {{pais.region}} </li>
+    </div>
+    <!--<a routerLink="/Listado" class="btn sdj"><b>Ver listado</b></a>-->
   </div>
 </div>
+
+
 
 <div class="card-h">
   <div class="card-h-media">
