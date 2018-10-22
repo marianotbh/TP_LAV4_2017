@@ -1,15 +1,12 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { ArchivosJugadoresService } from './archivos-jugadores.service';
 
 describe('ArchivosJugadoresService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [ArchivosJugadoresService]
-    });
-  });
+  beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', inject([ArchivosJugadoresService], (service: ArchivosJugadoresService) => {
+  it('should be created', () => {
+    const service: ArchivosJugadoresService = TestBed.get(ArchivosJugadoresService);
     expect(service).toBeTruthy();
-  }));
+  });
 });

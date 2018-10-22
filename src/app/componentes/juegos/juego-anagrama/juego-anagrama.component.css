@@ -1,0 +1,7 @@
+.flip {
+    -moz-transform: scaleY(-1);    /* Gecko */
+    -o-transform: scaleY(-1);      /* Opera */
+    -webkit-transform: scaleY(-1); /* Webkit */
+    transform: scaleY(-1);         /* Standard */
+    filter: FlipH;                 /* IE 6/7/8 */
+  }

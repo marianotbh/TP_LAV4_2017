@@ -1,0 +1,37 @@
+<div class="container my-3">
+  <div class="row" class="text-center">
+    <h1 class="text-center">
+      {{nuevoJuego.nombre}}!
+    </h1>
+  </div>
+  <div class="row" class="text-center">
+    <small class="text-center d-block">
+      Adiviná el país americano para ganar!
+    </small>
+  </div>
+
+  <form id="juego" class="my-3 mx-auto p-5 w-50 border rounded text-center container">
+    <div *ngIf="start">
+      <div id="info" class="row border border-bottom-0 rounded-0 p-1">
+        <div class="col-6 text-left"><small class="text-uppercase d-block"><b>Intentos: {{intentos}}</b></small></div>
+      </div>
+      <div class="row border rounded-0 p-3">
+        <p>Anagrama generado: {{nuevoJuego.anagramaGenerado}}</p>
+        <input type="text" [(ngModel)]="palabraIngresada" name="palabraIngresada" (keyup.enter)="Verificar()">
+        <p *ngIf="">Pais secreto: <small class="flip d-inline-block">{{nuevoJuego.paisSecreto.name}}</small></p>
+      </div>
+    </div>
+
+    <h2 *ngIf="!start">
+      <h3>Comenzar</h3>
+      <button (click)="GenerarAnagrama()" class="btn btn-info btn-block">
+        Nueva partida</button>
+    </h2>
+  </form>
+
+  <div id="snackbar" class="d-none">
+    <h3 class="py-2 m-0 font-italic">"{{mensaje}}"</h3>
+    <hr>
+    <div class="py-2 m-0">{{ayuda}}</div>
+  </div>
+</div>

@@ -1,48 +1,31 @@
 import { Injectable } from '@angular/core';
 import { ArchivosJugadoresService } from './archivos-jugadores.service';
-import { MiHttpService} from './mi-http/mi-http.service';
+import { Jugador } from '../clases/jugador';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 @Injectable()
 export class JugadoresService {
 
-  peticion: any;
-  constructor(
-    //public miHttp: ArchivosJugadoresService,
-    public miHttp:MiHttpService) {
-    // this.peticion = this.miHttp.traerJugadores();
-    this.peticion = this.miHttp.httpGetO("https://restcountries.eu/rest/v2/all");
-  }
-
-
+  jugadores: any;
   filtrado: any;
 
-  traertodos(ruta: string, filtro: string) {
-    return this.miHttp.httpGetP(ruta).then(data => {
-    //return this.miHttp.traerJugadores(ruta).then(data => {
-      console.info("jugadores service", data);
+  constructor(public jugadoresService: ArchivosJugadoresService) { }
 
-      this.filtrado = data;
+  TraerSolo(filtro: string): Observable<Array<Jugador>> {
+    return this.jugadoresService.TraerJugadores().pipe(
+      map(data => {
+        let ganador: boolean;
 
-      let ganador: boolean;
-      if (filtro == "ganadores") {
-        ganador = true;
-      }
-      else {
-        ganador = false;
-      }
+        if (filtro == "ganadores") {
+          ganador = true;
+        }
+        else {
+          ganador = false;
+        }
 
-      this.filtrado = this.filtrado.filter(
-        data => data.gano === ganador || filtro == "todos"); return this.filtrado
-    }
-    )
-      .catch(errror => {
-        console.log("error")
-
-
-
-        return this.filtrado;
-
-
-      });
+        return data.filter(data => data.gano === ganador || filtro == "todos");
+      })
+    );
   }
-
 }

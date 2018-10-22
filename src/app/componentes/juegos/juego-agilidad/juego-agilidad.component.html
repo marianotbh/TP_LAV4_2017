@@ -1,0 +1,40 @@
+<div class="container my-3">
+  <h1 class="text-center">
+    {{nuevoJuego.nombre}}!
+  </h1>
+  <small class="text-center d-block">
+    Resolvé la operación en pantalla dentro del tiempo para ganar
+  </small>
+  <form id="juego" class="my-3 mx-auto p-5 w-50 border rounded text-center">
+    <div *ngIf="start">
+      <div class="border rounded-0 p-3 display-4">{{nuevoJuego.num1}} {{nuevoJuego.operador}} {{nuevoJuego.num2}} =
+        <input id="inputNum" [(ngModel)]="nuevoJuego.numeroIngresado" name="numeroIngresado" (keyup.enter)="Verificar()"
+          type="text" autocomplete="off" />
+      </div>
+
+    </div>
+
+    <div *ngIf="">
+      <h2><button *ngIf="nuevoJuego.resultadoOperacion != 0" (click)="Verificar()" class="btn btn-success btn-block">Verificar</button></h2>
+    </div>
+
+
+    <h2>
+      <h3 *ngIf="!start">Comenzar</h3>
+      <button *ngIf="nuevoJuego.resultadoOperacion == 0 " (click)="GenerarOperacion()" class="btn btn-info btn-block">
+        Nueva operación</button>
+    </h2>
+
+    <small>
+      <p *ngIf="nuevoJuego.resultadoOperacion != 0">Ingresá un número</p>
+    </small>
+
+    <div id="snackbar" *ngIf="start" class="d-none">
+      <div class="py-2 m-0">{{intentos}}</div>
+      <hr>
+      <h3 class="py-2 m-0 font-italic">"{{mensaje}}"</h3>
+      <hr>
+      <div class="py-2 m-0">{{ayuda}}</div>
+    </div>
+  </form>
+</div>

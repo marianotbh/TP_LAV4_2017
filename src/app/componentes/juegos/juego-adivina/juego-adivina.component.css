@@ -1,0 +1,32 @@
+form#juego {
+    position: relative;
+}
+
+#inputNum {
+    display:block;
+    width:100%;
+    height:150px;
+    padding:50px;
+    font-size:100px;
+    text-align:center;
+    border:none;
+    outline:none;
+    background-color:antiquewhite;
+    border-radius:5px;
+}
+
+#snackbar {
+    position: absolute;
+    width: 100%;
+    min-height:100%;
+    top:0;
+    left:0;
+}
+
+.Ganador {
+    background-color: #9cefa0;
+}
+
+.Perdedor {
+    background-color: #e6b16a;
+}

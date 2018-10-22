@@ -1,0 +1,60 @@
+<div class="container my-3">
+  <div class="row" class="text-center">
+    <h1 class="text-center">
+      {{nuevoJuego.nombre}}!
+    </h1>
+  </div>
+  <div class="row" class="text-center">
+    <small class="text-center d-block">
+      Juego contra la máquina! poné a prueba tu suerte
+    </small>
+  </div>
+
+  <form id="juego" class="my-3 mx-auto p-5 w-50 border rounded text-center container">
+    <div *ngIf="start">
+      <div id="info" class="row border border-bottom-0 rounded-0 p-1">
+        <div class="col-6 text-left"><small class="text-uppercase d-block"><b>Ronda: {{ronda}}</b></small></div>
+        <div class="col-6 text-right">
+          <i *ngIf="nuevoJuego.vidas > 2" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
+          <i *ngIf="nuevoJuego.vidas > 1" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
+          <i *ngIf="nuevoJuego.vidas > 0" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="row border rounded-0 p-3">
+        <div class="col-4">
+          <button class="border rounded bg-transparent m-auto w-100" (click)="Jugada(1)">
+            <i class="far fa-hand-rock display-4 d-block"></i>
+            <small class="text-uppercase d-block"><b>Piedra</b></small>
+          </button>
+        </div>
+        <div class="col-4">
+          <button class="border rounded bg-transparent m-auto w-100" (click)="Jugada(2)">
+            <i class="far fa-hand-paper display-4 d-block"></i>
+            <small class="text-uppercase d-block"><b>Papel</b></small>
+          </button>
+        </div>
+        <div class="col-4">
+          <button class="border rounded bg-transparent m-auto w-100" (click)="Jugada(3)">
+            <i class="far fa-hand-scissors display-4 d-block"></i>
+            <small class="text-uppercase d-block"><b>Tijera</b></small>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <h2 *ngIf="!start">
+      <h3>Comenzar</h3>
+      <button (click)="start = true" class="btn btn-info btn-block">
+        Nueva partida</button>
+    </h2>
+  </form>
+
+  <div id="snackbar" class="d-none">
+    <h3>Jugador 1: {{parseMovimiento(nuevoJuego.jug1)}}</h3>
+    <h3>Jugador 2: {{parseMovimiento(nuevoJuego.jug2)}}</h3>
+    <hr>
+    <h3 class="py-2 m-0 font-italic">"{{mensaje}}"</h3>
+    <hr>
+    <div class="py-2 m-0">{{ayuda}}</div>
+  </div>
+</div>

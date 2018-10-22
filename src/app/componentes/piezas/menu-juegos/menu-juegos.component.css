@@ -1,0 +1,17 @@
+.carousel-inner img {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#share-btns i {
+    width:20px;
+    height:20px;
+    line-height:20px;
+    text-align:center;
+    display:inline-block;
+}
+
+#share-btns .btn {
+    padding:5px;
+    margin:0 2px;
+}
