@@ -1,5 +1,23 @@
-.modal-center {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+nav {    
+    background-color: var(--violeta) !important;
+}
+nav a, nav button {
+    font-family: 'Zorque', cursive;
+    color:yellow;
+}
+nav #navSupportedContent span {
+  color:yellow !important;
+}
+nav ul:first-child li + li {
+    margin-left:1rem;
+}
+.dropdown-menu a {
+  color: var(--violeta) !important;
+}
+.dropdown-menu a:hover {
+  color: yellow !important;
+  background-color: var(--violeta) !important;
+}
+.dropdown:hover>.dropdown-menu {
+  display: block;
 }

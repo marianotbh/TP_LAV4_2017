@@ -1,104 +1,111 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { JuegoPiedraPapelTijera } from 'src/app/clases/juego-piedra-papel-tijera';
-import { Jugador } from 'src/app/clases/jugador';
+import { JuegoService } from 'src/app/servicios/juego.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-juego-ppt',
   templateUrl: './juego-ppt.component.html',
-  styleUrls: ['./juego-ppt.component.css']
+  styleUrls: ['./juego-ppt.component.css'],
+  animations: [
+    trigger('popMessage', [
+      state('shown', style({
+        fontSize: '30px',
+        marginTop: '0px',
+        opacity: 1,
+      })),
+      state('hidden', style({
+        marginTop: '-100px',
+        opacity: 0
+      })),
+      transition('shown => hidden', [
+        animate('0.25s')
+      ])
+    ])
+  ]
 })
 export class JuegoPptComponent implements OnInit {
 
   @Output() enviarJuego: EventEmitter<any> = new EventEmitter<any>();
-  @Input() jugador: Jugador;
+  @Input() jugador: string;
 
-  nuevoJuego: JuegoPiedraPapelTijera;
+  juego: JuegoPiedraPapelTijera;
 
   ronda: number;
-  gano: number;
+  vidas: number;
 
+  start: boolean = false;
+  end: boolean = false;
+  gano: boolean;
+  verificando: boolean = false;
+  showMessage: boolean = false;
   mensaje: string;
-  ayuda: string;
 
-  start: boolean;
-
-  constructor() {
-    if (this.jugador == null || this.jugador == undefined)
-      this.jugador = new Jugador();
-    this.nuevoJuego = new JuegoPiedraPapelTijera("Piedra, Papel o Tijera", this.jugador.nombre, this.jugador.gano);
-    this.nuevaPartida();
+  constructor(private juegoService: JuegoService) {
+    this.juego = new JuegoPiedraPapelTijera("Piedra, Papel o Tijera", this.jugador, this.vidas);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  nuevaPartida() {
+  Start() {
     this.ronda = 1;
-    this.nuevoJuego.vidas = 3;
-    this.start = false;
-    this.gano = 0;
+    this.vidas = 3;
+    this.start = true;
+    this.end = false;
+    this.gano = false;
   }
 
-  Jugada(movimiento: number) {
-    this.nuevoJuego.MovimientoRival();
-
-    this.nuevoJuego.jug1 = movimiento;
-
-    this.Verificar();
-  }
-
-  MostrarMensaje(mensaje: string = "Mensaje", ganador: boolean = false) {
-    this.mensaje = mensaje;
-    var snackbar = document.getElementById("snackbar");
-
-    if (ganador) {
-      snackbar.className = "d-block bg-success";
-    } else {
-      snackbar.className = "d-block bg-warning";
-    }
-    setTimeout(function () {
-      snackbar.className = snackbar.className.replace("d-block", "d-none");
-    }, 3000);
+  MostrarMensaje(mensaje: string = "", ganador: boolean = false) {
+    return new Promise(resolve => {
+      this.mensaje = mensaje;
+      let viewport = document.getElementById("juego-wrap");
+      if (ganador) {
+        viewport.classList.add("bg-success");
+      } else {
+        viewport.classList.add("bg-warning");
+      }
+      setTimeout(function () {
+        if (viewport.classList.contains('bg-success')) {
+          viewport.classList.remove('bg-success');
+        }
+        if (viewport.classList.contains('bg-warning')) {
+          viewport.classList.remove('bg-warning');
+        }
+        resolve(false);
+      }, 1000);
+    })
   }
 
   Verificar() {
-    if (this.ronda <= 5) {
-      if (this.nuevoJuego.check() == 1) {
-        this.gano++;
-        if (this.gano == 3 && this.ronda <= 5) {
-          this.enviarJuego.emit(this.nuevoJuego);
-          this.MostrarMensaje("Bien ahí!", true);
-          this.ayuda = "Ganaste!";
-          this.nuevaPartida();
+    if (this.verificando == false) {
+      if (this.ronda <= 3) {
+        this.gano = this.juego.check() == 1 ? true : false;
+        if (this.gano) {
+          if (this.ronda == 3 && this.vidas > (this.ronda - this.vidas)) {
+            this.MostrarMensaje("Bien ahí!", true);
+          }
+          else if (this.ronda == 3 && this.vidas < (this.ronda - this.vidas)) {
+            this.MostrarMensaje("Perdiste!", false);
+          }
+          else {
+            this.MostrarMensaje(this.gano ? "Seguí así!" : "Ups", true);
+          }
         }
-        else if (this.ronda == 5 && this.gano > 3) {
-          let mensaje: string = "Perdiste! se te acabaron los intentos!!";
-          this.ayuda = "Perdiste";
-          this.MostrarMensaje(mensaje);
-          this.nuevaPartida();
-        }
-        else {
-          this.MostrarMensaje("Seguí así!", true);
-          this.ayuda = "Bien!";
+        else if (this.juego.check() == -1) {
+          this.vidas--;
         }
       }
-      else if (this.nuevoJuego.check() == -1) {
-        if (this.nuevoJuego.vidas > 0) {
-          let mensaje: string = "Perdiste! pero ánimo todavía te quedan " + this.nuevoJuego.vidas + " vidas y " + (5 - this.ronda) + " intentos";
-          this.ayuda = "Ayuda: " + this.nuevoJuego.help();
-          this.MostrarMensaje(mensaje);
-        }
-        else {
-          let mensaje: string = "Perdiste! ya no te quedan más vidas!!";
-          this.ayuda = "Perdiste";
-          this.MostrarMensaje(mensaje);
-          this.nuevaPartida();
-        }
-      }
+      else
+        this.end = true;
+      if (this.ronda < 3)
+        this.ronda++;
     }
+  }
 
-    if (this.ronda < 5) {
-      this.ronda++;
-    }
+  Save() {
+    this.juegoService.Guardar(this.juego).subscribe(data => {
+      console.log(data);
+    });
   }
 
   parseMovimiento(mov: number) {

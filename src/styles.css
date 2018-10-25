@@ -1,11 +1,118 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-@import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import 'node_modules/typeface-baloo-tammudu/index.css';
+@import 'node_modules/typeface-press-start-2p/index.css';
+@import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import 'node_modules/font-awesome/css/font-awesome.min.css';
+
+:root {
+    --violeta: #3E06B0;
+}
 
 body {
     height: 100%;
-    padding-bottom: 225px;
     position: relative;
     min-height: 100vh;
     display: block;
+    background-image: url('/src/assets/imagenes/background.gif');
+    background-repeat: repeat;
+}
+
+a, a:hover {
+    text-decoration: none !important;
+}
+
+@font-face {
+    font-family: 'Zorque';
+    src: url('assets/typeface/zorque.ttf') format('truetype');
+    font-weight: bold;
+}
+
+button {
+    color:var(--blue);
+    background: none;
+    border:none;
+    padding:0;
+    margin:0;
+    cursor:pointer;    
+}
+
+.btn, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Zorque', cursive !important;
+}
+
+.btn:not(.cancel):not(.btn-outline) {
+    color: yellow !important;
+    background-color: var(--violeta) !important;
+    border:none;
+}
+
+.btn-outline {
+    color: yellow !important;
+    border: 1px solid yellow !important;
+    background: none !important;
+}
+
+.btn-outline:hover {
+    color: var(--violeta) !important;
+    background-color: yellow !important;
+}
+
+input {
+    border: 1px solid var(--violeta);
+}
+
+input, input::placeholder {
+    color: var(--violeta);
+    font-weight:bold;
+}
+
+.btn, .bouncy {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+}
+
+.btn:hover, .bouncy:hover {
+    cursor: pointer;
+    animation-name: bounce;
+    -moz-animation-name: bounce;
+}
+
+@keyframes bounce {
+    0%, 100%, 20%, 50%, 80% {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0)
+    }
+    40% {
+        -webkit-transform: translateY(-10px);
+        -ms-transform: translateY(-10px);
+        transform: translateY(-10px)
+    }
+    60% {
+        -webkit-transform: translateY(-5px);
+        -ms-transform: translateY(-5px);
+        transform: translateY(-5px)
+    }
+}
+
+#juego {
+    position:relative;
+}
+.bg-success{
+    background-color:#71ec8c !important;
+}
+.bg-warning {
+    background-color:#f2b96a !important;
+}
+#message {
+    font-size:0px;
+    font-weight:bold;
+    position:absolute;
+    top:10%;
+    left:50%;
+    transform: translate(-50%,-50%);
 }

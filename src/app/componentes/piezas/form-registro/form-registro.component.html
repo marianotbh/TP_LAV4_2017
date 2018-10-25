@@ -1,25 +1,40 @@
-<div id="form-registro" class="d-block mx-auto my-5 px-4 py-3 border shadow rounded" style="max-width:400px">
+<form [formGroup]="registerForm" (ngSubmit)="Register()" class="bg-white d-block mx-auto my-5 px-4 py-3 border shadow rounded"
+  style="max-width:400px">
+  <div class="form-group" class="text-center">
+    <input id="inputFile" type="file" (change)="onFileChange($event)" />
+    <label id="avatar" for="inputFile"><i class="fas fa-user d-inline-block align-middle"></i></label>
+  </div>
+  <hr>
   <div class="form-group">
-    <label for="email">Nombre de usuario:</label>
-    <input type="email" class="form-control" id="user-name">
+    <label>Nombre de usuario:</label>
+    <input type="text" class="form-control" formControlName="name" [ngClass]="{ 'd-block is-invalid': submitted && f.name.errors }">
+    <div *ngIf="registerForm.hasError('required') && submitted" class="text-danger">Debe llenar este campo</div>
+    <div *ngIf="registerForm.hasError('name') && submitted" class="text-danger">Formado de correo inválido</div>
   </div>
   <div class="form-group">
-    <label for="email">Correo electrónico:</label>
-    <input type="email" class="form-control" id="user-email">
+    <label>Correo electrónico:</label>
+    <input type="email" class="form-control" formControlName="email" [ngClass]="{ 'd-block is-invalid': submitted && f.email.errors }">
+    <div *ngIf="registerForm.hasError('required') && submitted" class="text-danger">Debe llenar este campo</div>
   </div>
   <div class="form-group">
-    <label for="pwd">Ingresá una contraseña:</label>
-    <input type="password" class="form-control" id="pwd">
+    <label>Contraseña:</label>
+    <input type="password" class="form-control" formControlName="password" [ngClass]="{ 'd-block is-invalid': submitted && f.password.errors }">
+    <div *ngIf="registerForm.hasError('required') && submitted" class="text-danger">Debe llenar este campo</div>
   </div>
   <div class="form-group">
-    <label for="pwd">Repetí tu contraseña:</label>
-    <input type="password" class="form-control" id="pwd">
+    <label>Repita su contraseña:</label>
+    <input type="password" class="form-control" formControlName="password2" [ngClass]="{ 'd-block is-invalid': submitted && f.password2.errors }">
+    <div *ngIf="registerForm.hasError('required') && submitted" class="text-danger">Debe llenar este campo</div>
+    <div *ngIf="registerForm.hasError('pwMatch') && submitted" class="text-danger">Debe llenar este campo</div>
   </div>
   <div class="form-group form-check">
     <label class="form-check-label">
-      <input class="form-check-input" type="checkbox"> Recordar mi usuario
+      <input type="checkbox" class="form-check-input" formControlName="aceptatyc" [ngClass]="{ 'd-block is-invalid': submitted && f.aceptatyc.errors }">
+      Acepto los
+      <button type="button" (click)="TerminosYCondiciones()">términos y condiciones</button>
     </label>
   </div>
-  <p>¿Ya tenés una cuenta? <a href="#">¡Registrate!</a></p>
-  <button type="submit" class="btn btn-primary btn-block">Registrarme</button>
-</div>
+  <p *ngIf="mensaje != ''" class="text-danger">{{mensaje}}</p>
+  <p>¿Ya tenés una cuenta? <button type="button" (click)="Login()">¡Inicia sesión!</button></p>
+  <button [disabled]="loading" type="submit" class="btn btn-block">Registrarme</button>
+</form>

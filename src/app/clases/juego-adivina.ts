@@ -4,29 +4,26 @@ export class JuegoAdivina extends Juego {
     numeroSecreto: number = 0;
     numeroIngresado = 0;
 
-    constructor(nombre: string = "Adivina el Número", jugador: string = "Invitado", gano: boolean = false) {
-        super(nombre, jugador, gano);
+    constructor(nombre: string = "Adivina el Número", jugador: string = "Invitado", puntaje: number = 0) {
+        super(nombre, jugador, puntaje);
     }
 
     public GenerarNumeroSecreto() {
         this.numeroSecreto = Math.floor((Math.random() * 100) + 1);
-        console.info('numero Secreto:' + this.numeroSecreto);
-        this.gano = false;
+        console.info('Número secreto: ' + this.numeroSecreto);
     }
 
     public check(): boolean {
         if (this.numeroIngresado == this.numeroSecreto)
-            this.gano = true;
-        if (this.gano)
             return true;
         else
             return false;
     }
 
     public help(): string {
-        if (this.numeroIngresado < this.numeroSecreto) {
+        if (this.numeroIngresado < this.numeroSecreto)
             return "Falta";
-        }
-        return "Te pasate";
+        else
+            return "Te pasate";
     }
 }

@@ -1,37 +1,56 @@
-<div class="container my-3">
-  <div class="row" class="text-center">
-    <h1 class="text-center">
-      {{nuevoJuego.nombre}}!
+<div class="container-fluid my-3">
+  <div id="cabecera" class="p-3 border-bottom text-center">
+    <h1>
+      {{juego.nombre}}!
     </h1>
-  </div>
-  <div class="row" class="text-center">
-    <small class="text-center d-block">
-      Adiviná el país americano para ganar!
+    <small class="d-block">
+      Adiviná el país americano para ganar
     </small>
   </div>
-
-  <form id="juego" class="my-3 mx-auto p-5 w-50 border rounded text-center container">
-    <div *ngIf="start">
-      <div id="info" class="row border border-bottom-0 rounded-0 p-1">
-        <div class="col-6 text-left"><small class="text-uppercase d-block"><b>Intentos: {{intentos}}</b></small></div>
-      </div>
-      <div class="row border rounded-0 p-3">
-        <p>Anagrama generado: {{nuevoJuego.anagramaGenerado}}</p>
-        <input type="text" [(ngModel)]="palabraIngresada" name="palabraIngresada" (keyup.enter)="Verificar()">
-        <p *ngIf="">Pais secreto: <small class="flip d-inline-block">{{nuevoJuego.paisSecreto.name}}</small></p>
+  <form id="juego" *ngIf="start && !end" class="my-3 mx-auto p-3 border rounded text-center">
+    <div id="barra-de-estado" class="border border-bottom-0 rounded-0">
+      <div class="row py-1 px-2">
+        <div class="col-6 text-left">
+        </div>
+        <div class="col-6 text-right">
+          Intentos: {{intentos}}
+        </div>
       </div>
     </div>
-
-    <h2 *ngIf="!start">
-      <h3>Comenzar</h3>
-      <button (click)="GenerarAnagrama()" class="btn btn-info btn-block">
-        Nueva partida</button>
-    </h2>
+    <div id="juego-wrap" class="border rounded-0 p-3 display-4">
+      <div [@popMessage]="showMessage ? 'shown' : 'hidden'" id="message">
+        <p [ngClass]="{ 'text-info': gano, 'text-warning': !gano }">{{mensaje}}</p>
+      </div>
+      <p class="display-4">{{juego.anagramaGenerado}}</p>
+      <input class="text-center border-bottom" type="text" [(ngModel)]="juego.palabraIngresada" name="palabraIngresada"
+        (keyup.enter)="Verificar()">
+    </div>
+    <small class="d-block text-uppercase text-center" *ngIf="intentos > 5">
+      Pais secreto: <span class="flip d-inline-block">{{juego.paisSecreto.name}}</span>
+    </small>
+    <div class="mt-3">
+      <button (click)="Verificar(e)" class="btn btn-success btn-lg">Verificar</button>
+    </div>
   </form>
 
-  <div id="snackbar" class="d-none">
-    <h3 class="py-2 m-0 font-italic">"{{mensaje}}"</h3>
-    <hr>
-    <div class="py-2 m-0">{{ayuda}}</div>
+  <div *ngIf="end" class="pt-3 text-center">
+    <p style="font-size:30px">Adivinaste!!!</p>
+    <p class="border border-info rounded p-2" style="font-size:20px">
+      Era {{juego.paisSecreto.name}}!
+      Adivinaste el país secreto en
+      <span class="font-weight-bold" [ngClass]="{ 'text-info': intentos > 0, 'text-warning': intentos == 0 }">
+        {{intentos}} </span>
+      intento<span *ngIf="intentos > 1">s</span>!
+    </p>
+  </div>
+
+  <div *ngIf="!start || end" class="btn-group mt-3 mx-auto d-block text-center">
+    <button (click)="Start()" class="btn btn-info btn-lg">
+      <span *ngIf="!start">¡Comenzar!</span>
+      <span *ngIf="end" (click)="Start()">¡Otra vez!</span>
+    </button>
+    <button *ngIf="end" (click)="Save()" class="btn btn-info btn-lg">
+      Guardar puntaje
+    </button>
   </div>
 </div>

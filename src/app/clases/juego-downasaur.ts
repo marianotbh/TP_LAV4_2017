@@ -1,11 +1,15 @@
-import { Juego } from '../clases/juego'
+import { Juego } from '../clases/juego';
+
 
 export class JuegoDownasaur extends Juego {
     numeroSecreto: number = 0;
     numeroIngresado = 0;
 
-    constructor(nombre: string = "Downasaur", jugador: string = "Invitado", gano: boolean = false) {
-        super(nombre, jugador, gano);
+    constructor(nombre: string = "Downasaur", jugador: string = "Invitado", puntaje: number = 0) {
+        super(nombre, jugador, puntaje);
+    }
+
+    public Downasaur() {
     }
 
     public check(): boolean {
@@ -13,6 +17,6 @@ export class JuegoDownasaur extends Juego {
     }
 
     public help(): string {
-        return "Hola";
+        return "Ayuda";
     }
 }

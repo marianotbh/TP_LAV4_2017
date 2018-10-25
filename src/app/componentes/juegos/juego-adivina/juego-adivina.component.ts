@@ -1,97 +1,103 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { JuegoAdivina } from '../../../clases/juego-adivina';
-import { Jugador } from 'src/app/clases/jugador';
+import { state, trigger, style, transition, animate } from '@angular/animations';
+import { JuegoService } from 'src/app/servicios/juego.service';
 
 @Component({
   selector: 'app-juego-adivina',
   templateUrl: './juego-adivina.component.html',
-  styleUrls: ['./juego-adivina.component.css']
+  styleUrls: ['./juego-adivina.component.css'],
+  animations: [
+    trigger('popMessage', [
+      state('shown', style({
+        fontSize: '30px',
+        marginTop: '0px',
+        opacity: 1,
+      })),
+      state('hidden', style({
+        marginTop: '-100px',
+        opacity: 0
+      })),
+      transition('shown => hidden', [
+        animate('0.25s')
+      ])
+    ])
+  ]
 })
 export class JuegoAdivinaComponent implements OnInit {
 
   @Output() enviarJuego: EventEmitter<any> = new EventEmitter<any>();
-  @Input() jugador: Jugador;
+  @Input() jugador: string;
 
-  nuevoJuego: JuegoAdivina;
+  juego: JuegoAdivina;
 
   numeroSecretoGenerado: boolean;
+  intentos: number;
 
+  start: boolean = false;
+  end: boolean = false;
+  gano: boolean = false;
+  verificando: boolean = false;
+  showMessage: boolean = false;
   mensaje: string;
-  ayuda: string;
-  contador: number;
-  intentos: string;
 
-  constructor() {
-    if (this.jugador == null || this.jugador == undefined)
-      this.jugador = new Jugador();
-    this.nuevoJuego = new JuegoAdivina("Adiviná el número secreto", this.jugador.nombre, this.jugador.gano);
+  constructor(public juegoService: JuegoService) {
+    this.juego = new JuegoAdivina("Adiviná el número secreto", this.jugador, this.intentos);
   }
 
-  GenerarNumeroSecreto() {
-    this.nuevoJuego.numeroIngresado = 0;
-    this.nuevoJuego.GenerarNumeroSecreto();
-    this.numeroSecretoGenerado = true;
-    this.contador = 0;
+  Start() {
+    this.start = true;
+    this.juego.GenerarNumeroSecreto();
+    this.end = false;
+    this.gano = false;
+    this.verificando = false;
+    this.showMessage = false;
+    this.juego.numeroIngresado = 0;
+    this.intentos = 0;
   }
 
-  MostrarMensaje(mensaje: string = "Mensaje", ganador: boolean = false) {
-    this.mensaje = mensaje;
-    var snackbar = document.getElementById("snackbar");
-
-    if (ganador) {
-      snackbar.className = "d-block bg-success";
-    } 
-    else {
-      snackbar.className = "d-block bg-warning";
-    }
-
-    setTimeout(function () {
-      snackbar.className = snackbar.className.replace("d-block", "d-none");
-    }, 3000);
+  MostrarMensaje(mensaje: string = "", ganador: boolean = false) {
+    return new Promise(resolve => {
+      this.mensaje = mensaje;
+      let viewport = document.getElementById("juego-wrap");
+      if (ganador) {
+        viewport.classList.add("bg-success");
+      } else {
+        viewport.classList.add("bg-warning");
+      }
+      setTimeout(function () {
+        if (viewport.classList.contains('bg-success')) {
+          viewport.classList.remove('bg-success');
+        }
+        if (viewport.classList.contains('bg-warning')) {
+          viewport.classList.remove('bg-warning');
+        }
+        resolve(false);
+      }, 1000);
+    })
   }
 
   Verificar() {
-    this.contador++;
-
-    if (this.nuevoJuego.check()) {
-      this.enviarJuego.emit(this.nuevoJuego);
-      this.MostrarMensaje("Sos un Genio!!!", true);
-      this.ayuda = "Ganaste!";
-      this.nuevoJuego.numeroSecreto = 0;
+    this.intentos++;
+    if (this.verificando == false) {
+      this.verificando = true;
+      this.gano = this.juego.check();
+      this.showMessage = true;
+      this.MostrarMensaje(this.gano ? "Adivinaste!!!" : this.juego.help(), this.gano).then(value => {
+        this.showMessage = <boolean>value;
+        this.verificando = <boolean>value;
+        this.juego.numeroIngresado = null;
+        if (this.gano) {
+          this.end = true;
+        }
+      });
     }
-    else {
-      let mensaje: string;
-      switch (this.contador) {
-        case 1:
-          mensaje = "No es ése, ánimo! puede que sea el próximo";
-          break;
-        case 2:
-          mensaje = "Mmm... te estarás acercando?";
-          break;
-        case 3:
-          mensaje = "Ese tampoco es, yo creí que la tercera era la vencida";
-          break;
-        case 4:
-          mensaje = "No era el " + this.nuevoJuego.numeroIngresado + ", probá con otro";
-          break;
-        case 5:
-          mensaje = this.contador + " intentos y todavía no, che";
-          break;
-        case 6:
-          mensaje = "Afortunado en el amor...";
-          break;
-        default:
-          mensaje = "Ya erraste " + this.contador + " veces";
-          break;
-      }
+  }
 
-      this.ayuda = "Ayuda: " + this.nuevoJuego.help();
-      this.intentos = "Intentos: " + this.contador;
-
-      this.MostrarMensaje(mensaje);
-    }
-
-    console.info("Número Secreto: ", this.nuevoJuego.gano);
+  Save() {
+    this.juegoService.Guardar(this.juego).subscribe(data => {
+      console.log(data);
+    });
   }
 
   ngOnInit() {

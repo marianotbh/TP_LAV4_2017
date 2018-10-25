@@ -1,0 +1,20 @@
+#inputFile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+#inputFile + label {
+    width:200px;
+    height:200px;
+    border-radius:100%;
+    display: block;
+    text-align:center;
+    margin:auto;
+    font-size:100px;
+    background-color:rgba(0,0,0,0.01);
+    overflow:hidden;
+    position: relative;
+}

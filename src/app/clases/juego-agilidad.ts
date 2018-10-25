@@ -7,8 +7,8 @@ export class JuegoAgilidad extends Juego {
     resultadoOperacion: number = 0;
     numeroIngresado = 0;
 
-    constructor(nombre: string = "Adivina el Número", jugador: string = "Invitado", gano: boolean = false) {
-        super(nombre, jugador, gano);
+    constructor(nombre: string = "Adivina el Número", jugador: string = "Invitado", puntaje: number = 0) {
+        super(nombre, jugador, puntaje);
     }
 
     public GenerarOperacion() {
@@ -44,13 +44,10 @@ export class JuegoAgilidad extends Juego {
                 }
                 break;
         }
-        this.gano = false;
     }
 
     public check(): boolean {
         if (this.numeroIngresado == this.resultadoOperacion)
-            this.gano = true;
-        if (this.gano)
             return true;
         else
             return false;

@@ -1,26 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg sticky-top">
   <div class="container">
-    <a class="navbar-brand" routerLink="/"><i class="fas fa-gamepad"></i></a>
+    <a class="navbar-brand" routerLink="/"><img src="../../../../assets/imagenes/logo.png" width="45px"></a>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <i class="fas fa-bars"></i>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" routerLink="/">Inicio <span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink="/"><i class="fas fa-home mr-1"></i>Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/Juegos">Juegos</a>
+          <a class="nav-link" routerLink="/Juegos"><i class="fas fa-gamepad mr-1"></i>Juegos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/QuienSoy"><i class="fas fa-user mr-1"></i>Acerca de mí</a>
         </li>
       </ul>
       <ul class="navbar-nav my-2 my-lg-0">
-        <li class="nav-item">
+        <li *ngIf="isLoggedIn" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+            <span class="d-inline-block align-middle mr-2">{{userName}}</span>
+            <i class="far fa-smile d-inline-block align-middle" style="font-size:30px"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="" (click)="Logout()">Cerrar sesión</a>
+          </div>
+        </li>
+
+        <li *ngIf="!isLoggedIn" class="nav-item">
           <button class="nav-link bg-transparent border-0 " (click)="Login()">Inicia sesión</button>
         </li>
-        <li class="nav-item">
-          <a routerLink="/Registro" routerLinkActive="active" class="btn btn-outline-primary">Regístrate</a>
+        <li *ngIf="!isLoggedIn" class="nav-item">
+          <a routerLink="/Registro" routerLinkActive="active" class="btn btn-outline">Regístrate</a>
         </li>
       </ul>
     </div>

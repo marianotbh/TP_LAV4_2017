@@ -1,7 +1,3 @@
-form#juego {
-    position: relative;
-}
-
 #inputNum {
     display:block;
     width:100%;
@@ -13,20 +9,4 @@ form#juego {
     outline:none;
     background-color:antiquewhite;
     border-radius:5px;
-}
-
-#snackbar {
-    position: absolute;
-    width: 100%;
-    min-height:100%;
-    top:0;
-    left:0;
-}
-
-.Ganador {
-    background-color: #9cefa0;
-}
-
-.Perdedor {
-    background-color: #e6b16a;
 }

@@ -3,11 +3,9 @@ import { Juego } from '../clases/juego'
 export class JuegoPiedraPapelTijera extends Juego {
     jug1: number;
     jug2: number;
-    vidas: number;
 
-    constructor(nombre: string = "Adivina el Número", jugador: string = "Invitado", gano: boolean = false) {
-        super(nombre, jugador, gano);
-        this.vidas = 3;
+    constructor(nombre: string = "Piedra, Papel o Tijera", jugador: string = "Invitado", puntaje: number = 0) {
+        super(nombre, jugador, puntaje);
     }
 
     public MovimientoRival() {
@@ -19,15 +17,12 @@ export class JuegoPiedraPapelTijera extends Juego {
         //2 = Papel
         //3 = Tijera
         if (this.jug1 == 1 && this.jug2 == 2) {
-            this.vidas--;
             return -1;
         }
         else if (this.jug1 == 2 && this.jug2 == 3) {
-            this.vidas--;
             return -1;
         }
         else if (this.jug1 == 3 && this.jug2 == 1) {
-            this.vidas--;
             return -1;
         }
         else if (this.jug1 == this.jug2) {

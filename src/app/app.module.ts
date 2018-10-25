@@ -1,10 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { environment } from '../environments/environment';
+import { AngularFileUploaderModule } from "angular-file-uploader";
 
 import { AppComponent } from './app.component';
 import { InicioComponent } from './componentes/pantallas/inicio/inicio.component';
@@ -36,8 +35,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListadoJugadoresComponent } from './componentes/piezas/listado-jugadores/listado-jugadores.component';
 import { PaisesService } from './servicios/paises.service';
 import { JuegoService } from './servicios/juego.service';
-import { JugadoresService } from './servicios/jugadores.service';
-import { ArchivosJugadoresService } from './servicios/archivos-jugadores.service';
+import { UsuariosService } from './servicios/usuarios.service';
+import { ListadoAnagramaComponent } from './componentes/piezas/listado-anagrama/listado-anagrama.component';
+import { TerminosYCondicionesComponent } from './componentes/piezas/terminos-y-condiciones/terminos-y-condiciones.component';
 
 @NgModule({
   declarations: [
@@ -65,28 +65,32 @@ import { ArchivosJugadoresService } from './servicios/archivos-jugadores.service
     ListadoDownasaurComponent,
     ListadoAgilidadComponent,
     ListadoAdivinaComponent,
-    ListadoJugadoresComponent
+    ListadoJugadoresComponent,
+    ListadoAnagramaComponent,
+    TerminosYCondicionesComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     RuteoModule,
+    AngularFileUploaderModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule
   ],
   providers: [
     HostService,
+    NgbActiveModal,
+    UsuariosService,
     JuegoService,
-    JugadoresService,
-    ArchivosJugadoresService,
-    PaisesService,
+    PaisesService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    FormLoginComponent
+    FormLoginComponent,
+    TerminosYCondicionesComponent
   ]
 })
+
 export class AppModule { }

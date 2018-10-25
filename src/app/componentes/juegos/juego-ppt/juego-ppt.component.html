@@ -1,60 +1,70 @@
-<div class="container my-3">
-  <div class="row" class="text-center">
-    <h1 class="text-center">
-      {{nuevoJuego.nombre}}!
+<div class="container-fluid my-3">
+  <div id="cabecera" class="p-3 border-bottom text-center">
+    <h1>
+      {{juego.nombre}}!
     </h1>
-  </div>
-  <div class="row" class="text-center">
-    <small class="text-center d-block">
+    <small class="d-block">
       Juego contra la máquina! poné a prueba tu suerte
     </small>
   </div>
-
-  <form id="juego" class="my-3 mx-auto p-5 w-50 border rounded text-center container">
-    <div *ngIf="start">
-      <div id="info" class="row border border-bottom-0 rounded-0 p-1">
+  <form id="juego" *ngIf="start && !end" class="my-3 mx-auto p-3 border rounded text-center">
+    <div id="barra-de-estado" class="border border-bottom-0 rounded-0">
+      <div class="row py-1 px-2">
         <div class="col-6 text-left"><small class="text-uppercase d-block"><b>Ronda: {{ronda}}</b></small></div>
         <div class="col-6 text-right">
-          <i *ngIf="nuevoJuego.vidas > 2" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
-          <i *ngIf="nuevoJuego.vidas > 1" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
-          <i *ngIf="nuevoJuego.vidas > 0" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
+          <i *ngIf="vidas > 2" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
+          <i *ngIf="vidas > 1" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
+          <i *ngIf="vidas > 0" class="fas fa-heart text-danger ml-1" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="row border rounded-0 p-3">
+    </div>
+    <div id="juego-wrap" class="border rounded-0 p-3 display-4">
+      <div [@popMessage]="showMessage ? 'shown' : 'hidden'" id="message">
+        <p [ngClass]="{ 'text-info': gano, 'text-warning': !gano }">{{mensaje}}</p>
+      </div>
+      <div class="row rounded p-3">
         <div class="col-4">
-          <button class="border rounded bg-transparent m-auto w-100" (click)="Jugada(1)">
+          <button class="border rounded bg-transparent m-auto w-100" (click)="juego.jug1 = 1">
             <i class="far fa-hand-rock display-4 d-block"></i>
             <small class="text-uppercase d-block"><b>Piedra</b></small>
           </button>
         </div>
         <div class="col-4">
-          <button class="border rounded bg-transparent m-auto w-100" (click)="Jugada(2)">
+          <button class="border rounded bg-transparent m-auto w-100" (click)="juego.jug1 = 2">
             <i class="far fa-hand-paper display-4 d-block"></i>
             <small class="text-uppercase d-block"><b>Papel</b></small>
           </button>
         </div>
         <div class="col-4">
-          <button class="border rounded bg-transparent m-auto w-100" (click)="Jugada(3)">
+          <button class="border rounded bg-transparent m-auto w-100" (click)="juego.jug1 = 3">
             <i class="far fa-hand-scissors display-4 d-block"></i>
             <small class="text-uppercase d-block"><b>Tijera</b></small>
           </button>
         </div>
       </div>
     </div>
-
-    <h2 *ngIf="!start">
-      <h3>Comenzar</h3>
-      <button (click)="start = true" class="btn btn-info btn-block">
-        Nueva partida</button>
-    </h2>
+    <div class="mt-3">
+      <button (click)="Verificar(e)" class="btn btn-success btn-lg">Verificar</button>
+    </div>
   </form>
 
-  <div id="snackbar" class="d-none">
-    <h3>Jugador 1: {{parseMovimiento(nuevoJuego.jug1)}}</h3>
-    <h3>Jugador 2: {{parseMovimiento(nuevoJuego.jug2)}}</h3>
-    <hr>
-    <h3 class="py-2 m-0 font-italic">"{{mensaje}}"</h3>
-    <hr>
-    <div class="py-2 m-0">{{ayuda}}</div>
+  <div *ngIf="end" class="pt-3 text-center">
+    <div style="font-size:30px">
+      <span *ngIf="2 > vidas">Perdiste!!</span>
+      <span *ngIf="vidas > 1">Ganaste!!</span>
+    </div>
+    <p class="border border-info rounded p-2" style="font-size:20px">
+      y con {{vidas}} de sobra!
+    </p>
+  </div>
+
+  <div *ngIf="!start || end" class="btn-group mt-3 mx-auto d-block text-center">
+    <button (click)="Start()" class="btn btn-info btn-lg">
+      <span *ngIf="!start">¡Comenzar!</span>
+      <span *ngIf="end" (click)="Start()">¡Otra vez!</span>
+    </button>
+    <button *ngIf="end" (click)="Save()" class="btn btn-info btn-lg">
+      Guardar puntaje
+    </button>
   </div>
 </div>

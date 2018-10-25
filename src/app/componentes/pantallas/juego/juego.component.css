@@ -1,0 +1,17 @@
+#juego {
+    position:relative;
+}
+.bg-success{
+    background-color:#71ec8c !important;
+}
+.bg-warning {
+    background-color:#f2b96a !important;
+}
+#message {
+    font-size:0px;
+    font-weight:bold;
+    position:absolute;
+    top:10%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
